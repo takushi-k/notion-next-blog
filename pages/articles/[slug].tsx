@@ -12,14 +12,15 @@ import NotionBlocks from "notion-block-renderer"
 
 export const getStaticPaths: GetStaticPaths = async () => {
   console.log("getStaticPaths")
-  const { results } = await fetchPages({})
+  const {results} = await fetchPages({})
   const paths = results.map((page: any) => {
     return {
       params: {
-        slug: getText(page.properties.slug.rich_text)
+        slug: getText(page.properties.slug.rich_text),
       }
     }
   })
+  console.log(paths)
 
   return {
     paths: paths,
@@ -27,31 +28,34 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  console.log("111111111111111")
-  console.log(ctx.params);
+  console.log("getStaticProps 実施")
+  console.log(ctx.params)
+  // http://localhost:3000/articles/green?a=1&b=2 でアクセスした場合
+  // { slug: 'green' }
 
-  const { slug } = ctx.params as Params;
+  const { slug } = ctx.params as Params
 
-  const {results} = await fetchPages({slug: slug})
+  const {results} = await fetchPages({ slug: slug })
   const page = results[0]
   const pageId = page.id
-  const {results: blocks} = await fetchBlocksByPageId(pageId)
+  const { results: blocks } = await fetchBlocksByPageId(pageId)
 
   return {
     props: {
       page: page,
       blocks: blocks
     },
-    revalidate: 10, //10s
+    revalidate: 10,
   }
-
 }
 
+
 const Article: NextPage<ArticleProps> = ({ page, blocks }) => {
+
+  console.log("Article コール")
   console.log(page)
-  // console.log(blocks)
+  console.log(blocks)
 
   return (
     <Layout>
@@ -67,6 +71,7 @@ const Article: NextPage<ArticleProps> = ({ page, blocks }) => {
             <Block key={index} block={block} />
           ))}
         </div> */}
+
         <div className="my-12">
           <NotionBlocks blocks={blocks} isCodeHighlighter={true} />
         </div>
@@ -76,3 +81,5 @@ const Article: NextPage<ArticleProps> = ({ page, blocks }) => {
 }
 
 export default Article
+
+

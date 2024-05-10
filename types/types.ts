@@ -16,9 +16,7 @@ export type PageProps = { //動作確認用の型
   content: string
 }
 
-export type CardProps = {
-  page: PageType
-}
+export type CardProps = { page: PageType }
 
 export type ArticleProps = {
   page: PageType,

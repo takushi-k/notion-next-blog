@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { FC } from 'react'
 
 const Card: FC<CardProps> = ({ page }) => {
-  console.log(getCover(page.cover))
+  // console.log(getCover(page.cover))
 
   return (
     <Link href={`/articles/${getText(page.properties.slug.rich_text)}`} className="flex justify-center ">
@@ -18,7 +18,8 @@ const Card: FC<CardProps> = ({ page }) => {
               className="w-full static w-full h-auto"
               src={getCover(page.cover)}
               alt=""
-              objectFit="cover"
+              // objectFit="cover"
+              style={{ objectFit: 'cover' }}
               width={400}
               height={225}
               quality={30}

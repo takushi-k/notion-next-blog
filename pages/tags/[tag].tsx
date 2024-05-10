@@ -12,7 +12,7 @@ import { IndexProps, Params, TagProps } from "@/types/types";
 import { getMultiSelect } from "@/utils/property";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-
+  console.log("getStaticPaths コール")
   const { results }: { results: Record<string, any>[] } = await fetchPages({})
 
   const pathSet: Set<string> = new Set();
@@ -29,16 +29,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   })
 
+
+  console.log(paths)
+
   return {
     paths: paths,
     fallback: "blocking"
   }
 }
 
+
 export const getStaticProps: GetStaticProps = async (ctx) => {
+  console.log(ctx.params)
   const {tag} = ctx.params as Params
 
   const { results } = await fetchPages({tag: tag});
+
+  console.log(results)
+
   return {
     props: {
       pages: results ? results : [],

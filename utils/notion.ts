@@ -4,6 +4,7 @@ const notion = new Client({ auth: process.env.NOTION_KEY as string});
 const DATABASE_ID = process.env.NOTION_DATABASE_ID as string;
 
 export const fetchPages = async ({slug, tag}: {slug?: string, tag?: string}) => {
+// export const fetchPages = async () => {
 
   const and: any = [
     {
